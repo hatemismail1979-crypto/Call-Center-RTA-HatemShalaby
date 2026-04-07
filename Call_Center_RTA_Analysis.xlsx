@@ -1,0 +1,43 @@
+# Call Center RTA Data Analysis Workbook
+
+## Sheets Overview:
+- **Agent Performance Metrics**: Tracks agent-specific KPIs.
+- **Shift Data**: Contains details of shifts for agents.
+- **Call Statistics**: Statistical analysis of calls handled.
+- **Break Tracking**: Monitors breaks taken by agents.
+- **Summary Dashboard**: Visual summary with pivot tables.
+
+## Sample Data:
+
+### Agent Performance Metrics
+| Agent Name | Calls Handled | Avg. Handling Time | Service Level | Utilization |
+|------------|---------------|-------------------|---------------|-------------|
+| John Doe  | 120           | 4:10              | 90%           | 75%         |
+| Jane Smith| 150           | 3:45              | 92%           | 80%         |
+
+### Shift Data
+| Agent Name | Shift Start | Shift End | Breaks Taken |
+|------------|-------------|-----------|---------------|
+| John Doe  | 9:00 AM     | 5:00 PM   | 3             |
+| Jane Smith| 9:00 AM     | 5:00 PM   | 2             |
+
+### Call Statistics
+| Date       | Total Calls | Abandoned Calls | Avg. Wait Time |
+|------------|-------------|-----------------|----------------|
+| 2026-04-01 | 300         | 15              | 30 secs        |
+| 2026-04-02 | 350         | 10              | 28 secs        |
+
+### Break Tracking
+| Agent Name | Break Start | Break End |
+|------------|-------------|-----------|
+| John Doe  | 12:00 PM    | 12:15 PM  |
+| Jane Smith| 1:00 PM     | 1:15 PM   |
+
+## Formulas Examples:
+1. **Average Handling Time**: `=AVERAGE(B2:B10)`
+2. **Utilization**: `=SUM(B2:B10)/SUM(C2:C10)`
+3. **Service Level Calculation**: `=IF(Calls Answered">=" Target Calls, "Achieved", "Not Achieved")`
+
+### Pivot Tables:
+- Create pivot tables in the Summary Dashboard to analyze performance metrics by agent and by shift.
+- Use slicers for dynamic filtering of pivot table data to enhance report interactivity.
