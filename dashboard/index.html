@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Center Real-Time Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 90%; margin: auto; overflow: hidden; }
+        .kpi { display: flex; justify-content: space-around; margin: 20px 0; }
+        .kpi-card { background: #f4f4f4; padding: 20px; border-radius: 5px; flex: 1; text-align: center; }
+        canvas { margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Call Center Real-Time Dashboard</h1>
+        <div class="kpi">
+            <div class="kpi-card">
+                <h2>Average Call Volume</h2>
+                <p id="avgCallVolume">0</p>
+            </div>
+            <div class="kpi-card">
+                <h2>Service Level</h2>
+                <p id="serviceLevel">0%</p>
+            </div>
+            <div class="kpi-card">
+                <h2>Agent Utilization</h2>
+                <p id="agentUtilization">0%</p>
+            </div>
+            <div class="kpi-card">
+                <h2>Skills Distribution</h2>
+                <p id="skillsDistribution">N/A</p>
+            </div>
+        </div>
+        <canvas id="callVolumeChart"></canvas>
+        <canvas id="serviceLevelChart"></canvas>
+        <canvas id="agentUtilizationChart"></canvas>
+        <canvas id="skillsDistributionChart"></canvas>
+        <table id="agentPerformanceTable">
+            <thead>
+                <tr>
+                    <th>Agent Name</th>
+                    <th>Calls Handled</th>
+                    <th>Average Handling Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Agent data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Mock data for dashboard
+        const dummyData = {
+            callVolume: [10, 20, 15, 25, 30],
+            serviceLevels: [80, 85, 82, 90, 88],
+            agentUtilization: [45, 55, 60, 70, 65],
+            skillsDistribution: [30, 40, 20, 10],
+            agentPerformance: [
+                { name: 'Agent A', callsHandled: 200, avgHandlingTime: '3 mins' },
+                { name: 'Agent B', callsHandled: 150, avgHandlingTime: '5 mins' },
+                { name: 'Agent C', callsHandled: 180, avgHandlingTime: '4 mins' }
+            ]
+        };
+
+        // Function to render charts
+        function renderCharts() {
+            const ctxCallVolume = document.getElementById('callVolumeChart').getContext('2d');
+            const ctxServiceLevel = document.getElementById('serviceLevelChart').getContext('2d');
+            const ctxAgentUtilization = document.getElementById('agentUtilizationChart').getContext('2d');
+            const ctxSkillsDistribution = document.getElementById('skillsDistributionChart').getContext('2d');
+
+            const callVolumeChart = new Chart(ctxCallVolume, {
+                type: 'line',
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                    datasets: [{
+                        label: 'Call Volume',
+                        data: dummyData.callVolume,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            const serviceLevelChart = new Chart(ctxServiceLevel, {
+                type: 'line',
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                    datasets: [{
+                        label: 'Service Level',
+                        data: dummyData.serviceLevels,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        fill: false
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            const agentUtilizationChart = new Chart(ctxAgentUtilization, {
+                type: 'bar',
+                data: {
+                    labels: ['Agent A', 'Agent B', 'Agent C'],
+                    datasets: [{
+                        label: 'Utilization',
+                        data: dummyData.agentUtilization,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            const skillsDistributionChart = new Chart(ctxSkillsDistribution, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Skill A', 'Skill B', 'Skill C', 'Skill D'],
+                    datasets: [{
+                        label: 'Skills Distribution',
+                        data: dummyData.skillsDistribution,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true }
+            });
+        }
+
+        // Function to populate agent performance data
+        function populateAgentPerformance() {
+            const tbody = document.getElementById('agentPerformanceTable').getElementsByTagName('tbody')[0];
+            dummyData.agentPerformance.forEach(agent => {
+                let row = tbody.insertRow();
+                row.insertCell(0).innerText = agent.name;
+                row.insertCell(1).innerText = agent.callsHandled;
+                row.insertCell(2).innerText = agent.avgHandlingTime;
+            });
+        }
+
+        window.onload = function() {
+            renderCharts();
+            populateAgentPerformance();
+        };
+    </script>
+</body>
+</html>
